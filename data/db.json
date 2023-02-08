@@ -1,0 +1,49 @@
+{
+  "member": [
+    {
+      "id": "admin",
+      "pwd": "admin",
+      "email": "admin@gmail.com",
+      "mobile": "01011112222",
+      "role": "ADMIN",
+      "regDate": "",
+      "status": "Y"
+    },
+    {
+      "id": "user01",
+      "pwd": "user01",
+      "email": "user01@gmail.com",
+      "mobile": "01011110101",
+      "role": "USER",
+      "regDate": "",
+      "status": "Y"
+    }
+  ],
+  "items": [
+    {
+      "itemNo": 1,
+      "image": "/images/item1.PNG",
+      "thumbnail": "/images/thumbnail_1.PNG",
+      "state": "Y"
+    },
+    {
+      "itemNo": 2,
+      "image": "/images/item2.PNG",
+      "thumbnail": "/images/thumbnail_2.PNG",
+      "state": "Y"
+    },
+    {
+      "itemNo": 3,
+      "image": "/images/item3.PNG",
+      "thumbnail": "/images/thumbnail_3.PNG",
+      "state": "Y"
+    },
+    {
+      "itemNo": 4,
+      "image": "/images/item4.PNG",
+      "thumbnail": "/images/thumbnail_4.PNG",
+      "state": "Y"
+    }
+
+  ]
+}

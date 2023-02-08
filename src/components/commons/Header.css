@@ -1,0 +1,19 @@
+.herder {
+    width: 100%;
+    height: auto;
+}
+
+.button:hover, .button:focus {
+    transform: scale( 1.1 ); 
+}
+
+.active img {
+    animation: rotate_image 3s ease infinite;
+    transform-origin: 50% 45%;
+}
+
+@keyframes rotate_image{
+    100% {
+        transform: rotate(360deg);
+    }
+}
