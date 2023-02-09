@@ -53,6 +53,9 @@ export const callLoginAPI = ({form}) => {
         .then(response => response.json());
 
         console.log('[MemberAPICalls] callLoginAPI RESULT : ', result);
+
+        alert(result.message);  
+
         if(result.status === 200){
             // localStorage 에 엑세스토큰 저장
             window.localStorage.setItem('accessToken', result.data.accessToken);            
@@ -95,10 +98,13 @@ export const callSignUpAPI = ({form}) => {
         })
         .then(response => response.json())
 
-        console.log('[MemberAPICalls] callSignUpAPI RESULT : ', result);        
+        console.log('[MemberAPICalls] callSignUpAPI RESULT : ', result);     
+        
+        alert(result.message);  
         
         if(result.status === 201){
             dispatch({ type: POST_SIGNUP,  payload: result });
-        }        
+            
+        }
     };
 }

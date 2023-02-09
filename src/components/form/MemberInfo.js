@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector  } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import './MemberInfo.css';
 import { callGetMemberAPI } from '../../apis/MemberAPICalls';
-import { callUpdateProfileAPI } from '../../apis/MypageAPICalls';
+import { 
+    callUpdateProfileAPI, 
+    callcheckPasswordAPI,
+    callUpdatePasswordAPI,
+    initializerAPI
+} from '../../apis/MypageAPICalls';
 
 
 function MemberInfo() {
@@ -10,10 +16,11 @@ function MemberInfo() {
 
 //필요기능선언
     // url 이동을 위한 네비게이트 선언
-
+    const navigate = useNavigate();
     // redux 이용 dispatcher selector 선언
     const dispatch = useDispatch();
     const loginMember = useSelector(state => state.memberReducer);
+    const mypageMember = useSelector(state => state.mypageReducer);
     
 //  component 내에서 관리할 state
     const [form, setForm] = useState({
@@ -23,12 +30,15 @@ function MemberInfo() {
         memberMobile: ''
     });
     const [ inputState, setInputState] = useState(false)
-
+    
     useEffect(() => {
         console.log('===== useEffect =====');
         dispatch(callGetMemberAPI());
+        if(mypageMember.message === "비밀번호 변경 성공") {
+            dispatch(initializerAPI());
+        }
     }, // eslint-disable-next-line
-    []);
+    [mypageMember]);
 
     useEffect(() => {        
         if(loginMember.data !== undefined) {
@@ -38,10 +48,11 @@ function MemberInfo() {
                 memberMobile: loginMember.data.memberMobile
             });
             console.log('set');
+        } else if (loginMember.status === 401) {
+            navigate("/login", { replace: true })
         }
     }, // eslint-disable-next-line
-    [loginMember]);
-
+    [loginMember, mypageMember]);
 
 
 //  event handler
@@ -53,7 +64,7 @@ function MemberInfo() {
             ...form,
             [e.target.name]: e.target.value
         });
-        if(form.memberId === '' || form.memberPwd === '' || form.memberEmail === '' || form.memberMobile === ''){
+        if(form.memberId === '' || form.memberEmail === '' || form.memberMobile === ''){
             console.log('input empty = setInputState(false)');
             setInputState(false)
 
@@ -69,21 +80,36 @@ function MemberInfo() {
             dispatch(callUpdateProfileAPI({
                 form: form
             }));
+
         } else {
             alert('가입정보를 모두 입력해주세요!')
         }        
     }
 
+    // 비밀번호확인 버튼 클릭
+    const onClickCheckPwdHandler = () => {
+        const checkPwd = prompt('[Check Password] 현재 비밀번호를 입력하세요!');
+
+        console.log(checkPwd);      
+
+        if(checkPwd !== ''){
+            dispatch(callcheckPasswordAPI(checkPwd))
+        } else {
+            alert('현재 비밀번호를 입력하세요!')
+        }          
+    }
+
     // 비밀번호변경 버튼 클릭
     const onClickChangePwdHandler = () => {
-        if(inputState === true){
-            // dispatch(callSignUpAPI({
-            //     form: form
-            // }));
+        if(form.memberPwd !== ''){
+            dispatch(callUpdatePasswordAPI({
+                form: form
+            }));
+
         } else {
-            alert('가입정보를 모두 입력해주세요!')
-        }        
-    }
+            alert('변경할 패스워드를 입력해주세요!')
+        }   
+    }    
 
     
 
@@ -100,14 +126,22 @@ function MemberInfo() {
             />
 
             <label>PWD</label>
+            { (mypageMember.status === 200) ?
+            <input 
+            type="password"
+            name="memberPwd" 
+            placeholder="변경할 비밀번호를 입력하세요" 
+            autoComplete='off'
+            onChange={ onChangeHandler }
+            />:
             <input 
                 type="password"
                 name="memberPwd" 
-                placeholder="패스워드" 
+                placeholder="비밀번호를 확인하세요" 
                 autoComplete='off'
-                onChange={ onChangeHandler }
-                // value={ form.memberPwd }
-            />
+                disabled
+            /> }
+            
 
             <label>Email</label>
             <input 
@@ -142,10 +176,20 @@ function MemberInfo() {
 
             <button
                 style={ { border: 'none', margin: 0, fontSize: '10px', height: '10px' } }
+                onClick = { onClickCheckPwdHandler }
+            >
+                비밀번호확인
+            </button>
+
+            <br></br>
+
+            { (mypageMember.status === 200) &&
+            <button
+                style={ { border: 'none', margin: 0, fontSize: '10px', height: '10px' } }
                 onClick = { onClickChangePwdHandler }
             >
                 비밀번호변경
-            </button>
+            </button> }
 
         </div>
     )
