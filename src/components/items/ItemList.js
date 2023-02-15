@@ -49,7 +49,11 @@ function ItemList() {
     console.log(Array.isArray(getItems));
 
     const onClickProductHandler = (itemNo) => { 
-        navigate(`/gallery/items/${itemNo}`, { replace: false });
+        if (loaction.pathname === '/gallery/items') {
+            navigate(`/gallery/items/${itemNo}`, { replace: true });
+        } else if (loaction.pathname === '/gallery-manager/items' && decoded === 'ADMIN') {
+            navigate(`/gallery-manager/items/${itemNo}`, { replace: true });
+        }
     }
 
     return (

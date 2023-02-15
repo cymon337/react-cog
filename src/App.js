@@ -7,6 +7,10 @@ import Gallery from './pages/gallery/Gallery';
 import GalleryManager from './pages/gallery-manager/GalleryManager';
 import Mypage from './pages/mypage/Mypage';
 import './App.css';
+import ItemList from './components/items/ItemList';
+import ItemDetails from './components/items/ItemDetails';
+import RegistItem from './components/items/RegistItem';
+import UpdateItem from './components/items/UpdateItem';
 
 function App() {
   return (
@@ -15,8 +19,15 @@ function App() {
 
         <Route path="/" element={ <Layout/> }>
           <Route index element={ <Main/> }/>
-          <Route path='/gallery' element={ <Gallery/> }/>
-          <Route path='/gallery-manager' element={ <GalleryManager/> }/>
+          <Route path='/gallery' element={ <Gallery/> }>
+            <Route path='/gallery/items' element={ <ItemList/> }/>
+            <Route path='/gallery/items/:itemNo' element={ <ItemDetails/> }/>
+          </Route>
+          <Route path='/gallery-manager' element={ <GalleryManager/> }>
+            <Route path='/gallery-manager/items' element={ <ItemList/> }/>                       
+            <Route path='/gallery-manager/items/regist' element={ <RegistItem/> }/>
+            <Route path='/gallery-manager/items/:itemNo' element={ <UpdateItem/> }/>
+          </Route>
           <Route path='/mypage' element={ <Mypage/> }/>
         </Route>
 

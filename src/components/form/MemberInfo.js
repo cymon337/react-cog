@@ -48,7 +48,10 @@ function MemberInfo() {
                 memberMobile: loginMember.data.memberMobile
             });
             console.log('set');
-        } else if (loginMember.status === 401) {
+        } 
+
+        if (loginMember.state === 401) {
+            console.log('need login');
             navigate("/login", { replace: true })
         }
     }, // eslint-disable-next-line
@@ -126,7 +129,7 @@ function MemberInfo() {
             />
 
             <label>PWD</label>
-            { (mypageMember.status === 200) ?
+            { (mypageMember.message === '비밀번호 확인 성공') ?
             <input 
             type="password"
             name="memberPwd" 
@@ -183,7 +186,7 @@ function MemberInfo() {
 
             <br></br>
 
-            { (mypageMember.status === 200) &&
+            { (mypageMember.message === '비밀번호 확인 성공') &&
             <button
                 style={ { border: 'none', margin: 0, fontSize: '10px', height: '10px' } }
                 onClick = { onClickChangePwdHandler }

@@ -1,13 +1,12 @@
 import logoBtn from '../../assets/icons/logo_button.png';
 import galleryBtn from '../../assets/icons/gallery_button.png';
 import mypageBtn from '../../assets/icons/mypage_button.png';
-import menuBtn from '../../assets/icons/menu_button.png';
+// import menuBtn from '../../assets/icons/menu_button.png';
 import loginBtn from '../../assets/icons/login_button.png';
 import logoutBtn from '../../assets/icons/islogin.png';
 import galleryMngBtn from '../../assets/icons/gallery_manager_button.png';
 import adminLoginBtn from '../../assets/icons/admin_login_button.png';
-import { Link } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { decodeJwt } from '../../utils/tokenUtils';
@@ -48,7 +47,7 @@ function Header() {
             <NavLink to="/" ><img className='button' id='logo' src={ logoBtn } alt='logo'/></NavLink>
             <NavLink to="/gallery" ><img className='button' id='gallery' src={ galleryBtn } alt='gallery'/></NavLink>
             { decoded ==="ADMIN" && <NavLink to="/gallery-manager" ><img className='button' id='gallery-manager' src={ galleryMngBtn } alt='gallery-manager'/></NavLink>}
-            <NavLink to="/" ><img className='button' id='menu' src={ menuBtn } alt='any menu'/></NavLink>
+            {/* <NavLink to="/" ><img className='button' id='menu' src={ menuBtn } alt='any menu'/></NavLink> */}
             
 
             {/* 로그인 상태에 따라 다른 컴포넌트 랜더링 */}
